@@ -290,7 +290,7 @@ a:hover {
 
 /* post card */
 
-..posts-list{
+.posts-list{
   display: flex;
   flex-direction: column;
   gap: 30px;
