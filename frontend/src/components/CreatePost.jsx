@@ -70,7 +70,7 @@ const CreatePost = ({ onPostCreated }) => {
         )}
         <div className="create-post-actions">
           <label className="image-upload-label">
-            Photo
+            Click to upload Photo
             <input
               type="file"
               accept="image/*"

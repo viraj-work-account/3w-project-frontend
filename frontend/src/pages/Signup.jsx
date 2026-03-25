@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { setCredentials } from "../features/auth/authSlice";
-import { signupAPI } from "../services/api";
+import { setCredentials } from "../features/auth/authSlice.js";
+import { signupAPI , loginAPI } from "../services/api.js";
+
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -26,15 +27,25 @@ const Signup = () => {
     setLoading(true);
 
     try {
+      // signup
       await signupAPI(formData);
-      // after signup, navigate to login
-      navigate("/login");
+
+      // auto login after signup
+      const res = await loginAPI({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      const { user, accessToken, refreshToken } = res.data.data;
+      dispatch(setCredentials({ user, accessToken, refreshToken }));
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed");
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="auth-container">
